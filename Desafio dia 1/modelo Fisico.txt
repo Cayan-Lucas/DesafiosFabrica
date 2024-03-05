@@ -1,0 +1,62 @@
+/* Lógico_1: */
+
+CREATE TABLE Modalidade (
+    CodMod NUMERIC PRIMARY KEY,
+    Nome VARCHAR
+);
+
+CREATE TABLE Turma (
+    CodigoTurma NUMERIC PRIMARY KEY,
+    Bloco NUMERIC,
+    Horario TIMESTAMP,
+    fk_Modalidade_CodMod NUMERIC,
+    fk_Professor_Matricula NUMERIC
+);
+
+CREATE TABLE Professor (
+    Matricula NUMERIC PRIMARY KEY,
+    Nome VARCHAR,
+    Sexo VARCHAR
+);
+
+CREATE TABLE Aluno (
+    Sexo VARCHAR,
+    Nome VARCHAR,
+    Matricula NUMERIC PRIMARY KEY,
+    fk_Estado_Singla VARCHAR
+);
+
+CREATE TABLE Estado (
+    Nome VARCHAR,
+    Singla VARCHAR PRIMARY KEY
+);
+
+CREATE TABLE Participa (
+    fk_Aluno_Matricula NUMERIC,
+    fk_Turma_CodigoTurma NUMERIC
+);
+ 
+ALTER TABLE Turma ADD CONSTRAINT FK_Turma_2
+    FOREIGN KEY (fk_Modalidade_CodMod)
+    REFERENCES Modalidade (CodMod)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Turma ADD CONSTRAINT FK_Turma_3
+    FOREIGN KEY (fk_Professor_Matricula)
+    REFERENCES Professor (Matricula)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Aluno ADD CONSTRAINT FK_Aluno_2
+    FOREIGN KEY (fk_Estado_Singla)
+    REFERENCES Estado (Singla)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Participa ADD CONSTRAINT FK_Participa_1
+    FOREIGN KEY (fk_Aluno_Matricula)
+    REFERENCES Aluno (Matricula)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Participa ADD CONSTRAINT FK_Participa_2
+    FOREIGN KEY (fk_Turma_CodigoTurma)
+    REFERENCES Turma (CodigoTurma)
+    ON DELETE SET NULL;
