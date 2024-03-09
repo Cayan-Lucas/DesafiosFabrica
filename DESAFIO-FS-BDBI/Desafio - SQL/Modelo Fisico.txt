@@ -1,0 +1,44 @@
+/* Lógico_1: */
+
+CREATE TABLE Jogador (
+    ID_Jogador INTEGER PRIMARY KEY,
+    Nome VARCHAR,
+    Username VARCHAR,
+    Pontuacao REAL,
+    Nivel_Alcancado INTEGER,
+    fk_Partida_ID_Partida INTEGER
+);
+
+CREATE TABLE Partida (
+    ID_Partida INTEGER PRIMARY KEY,
+    ID_Jogador INTEGER,
+    Data DATE,
+    Resultado VARCHAR,
+    Duracao FLOAT
+);
+
+CREATE TABLE Conquista (
+    ID_Conquista INTEGER PRIMARY KEY,
+    Nome VARCHAR,
+    Descricao VARCHAR
+);
+
+CREATE TABLE Consegue (
+    fk_Jogador_ID_Jogador INTEGER,
+    fk_Conquista_ID_Conquista INTEGER
+);
+ 
+ALTER TABLE Jogador ADD CONSTRAINT FK_Jogador_2
+    FOREIGN KEY (fk_Partida_ID_Partida)
+    REFERENCES Partida (ID_Partida)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Consegue ADD CONSTRAINT FK_Consegue_1
+    FOREIGN KEY (fk_Jogador_ID_Jogador)
+    REFERENCES Jogador (ID_Jogador)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Consegue ADD CONSTRAINT FK_Consegue_2
+    FOREIGN KEY (fk_Conquista_ID_Conquista)
+    REFERENCES Conquista (ID_Conquista)
+    ON DELETE RESTRICT;
